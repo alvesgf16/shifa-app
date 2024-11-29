@@ -6,9 +6,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
+  ForgetPassword: undefined;
 };
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
+
 
 type Props = {
   navigation: LoginScreenNavigationProp;
@@ -31,7 +33,7 @@ export default function LoginScreen({ navigation }: Props) {
       />
       <View style={styles.passwordContainer}>
         <Text style={styles.label}>Password</Text>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
           <Text style={styles.forgotText}>Forgot?</Text>
         </TouchableOpacity>
       </View>
