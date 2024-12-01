@@ -7,6 +7,7 @@ type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
   ForgetPassword: undefined;
+  RecoveryTracker: undefined;
 };
 
 type forgetPasswordScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ForgetPassword'>;

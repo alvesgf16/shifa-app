@@ -7,16 +7,22 @@ type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
   ForgetPassword: undefined;
+  RecoveryTracker: undefined; // Add the RecoveryTracker screen type
 };
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
-
 
 type Props = {
   navigation: LoginScreenNavigationProp;
 };
 
 export default function LoginScreen({ navigation }: Props) {
+  const handleLogin = () => {
+    // Simulate successful login
+    console.log('Login successful, navigating to RecoveryTracker');
+    navigation.navigate('RecoveryTracker');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>
@@ -43,7 +49,7 @@ export default function LoginScreen({ navigation }: Props) {
         placeholderTextColor="#888" // Set placeholder text color
         secureTextEntry
       />
-      <TouchableOpacity style={styles.loginButton} onPress={() => {}}>
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
       <View style={styles.signupContainer}>
