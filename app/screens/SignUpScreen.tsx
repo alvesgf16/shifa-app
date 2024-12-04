@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Image, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useUserAuth } from '../contexts/AuthContext';
 
 // Define the type for the navigation prop
 type RootStackParamList = {
@@ -15,6 +16,8 @@ type Props = {
 };
 
 export default function SignUpScreen({ navigation }: Props) {
+  const { onGoogleButtonPress } = useUserAuth();
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentContainer}>
@@ -36,7 +39,7 @@ export default function SignUpScreen({ navigation }: Props) {
         <TouchableOpacity style={styles.createAccountButton} onPress={() => {}}>
           <Text style={styles.createAccountButtonText}>Create Account</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.googleButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.googleButton} onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}>
           <Image source={require('../../assets/images/Google.png')} style={styles.googleIcon} />
           <Text style={styles.googleButtonText}>Continue with Google</Text>
         </TouchableOpacity>
