@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { useFonts } from 'expo-font';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-export default function RecoveryTrackerScreen() {
+
+export default function RecoveryTrackerScreen({navigation}) {
   const [progress, setProgress] = useState(75);
   const [fontsLoaded] = useFonts({
     'Khand': require('../../assets/fonts/Khand-Regular.ttf'),
@@ -48,12 +50,12 @@ export default function RecoveryTrackerScreen() {
 
       <Text style={styles.moodText}>How are you feeling today?</Text>
       <View style={styles.moodButtonsContainer}>
-        <TouchableOpacity style={styles.moodButton} onPress={() => handleMoodLog('happy')}>
+        <TouchableOpacity style={styles.moodButton} onPress={() => navigation.navigate('DailyLog', { mood: 'happy' })}>
           <Text style={styles.moodEmoji}>😊</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.moodButton} onPress={() => handleMoodLog('sad')}>
-          <Text style={styles.moodEmoji}>😞</Text>
-        </TouchableOpacity>
+        <TouchableOpacity style={styles.moodButton} onPress={() => navigation.navigate('DailyLog', { mood: 'sad' })}>
+      <Text style={styles.moodEmoji}>😞</Text>
+</TouchableOpacity>
       </View>
     </View>
   );

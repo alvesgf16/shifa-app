@@ -7,6 +7,7 @@ import RecoveryTrackerScreen from './screens/RecoveryTrackerScreen';
 import { AuthContextProvider } from './contexts/AuthContext';
 import HomeScreen from './screens/HomeScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import DailyLogScreen from './screens/DailyLogScreen';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ export default function RootLayout() {
         <Stack.Screen name="RecoveryTracker" component={RecoveryTrackerScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="DailyLog" component={DailyLogScreen} />
       </Stack.Navigator>
     </AuthContextProvider>
   );
