@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { useFonts } from 'expo-font';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-export default function RecoveryTrackerScreen() {
-  const [progress, setProgress] = useState(75); // Example progress percentage
+
+export default function RecoveryTrackerScreen({navigation}) {
+  const [progress, setProgress] = useState(75);
+  const [fontsLoaded] = useFonts({
+    'Khand': require('../../assets/fonts/Khand-Regular.ttf'),
+    'Khand-Medium': require('../../assets/fonts/Khand-Medium.ttf'),
+    'Khand-Bold': require('../../assets/fonts/Khand-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   const handleMoodLog = (mood: string) => {
     console.log(`Mood logged: ${mood}`);
-    // Add functionality to save mood
   };
 
   return (
     <View style={styles.container}>
-      {/* Circular Progress Bar */}
       <AnimatedCircularProgress
         size={150}
         width={15}
@@ -26,12 +36,10 @@ export default function RecoveryTrackerScreen() {
         )}
       </AnimatedCircularProgress>
 
-      {/* Next Milestone */}
       <Text style={styles.milestoneText}>Next milestone: 2 months</Text>
 
-      {/* Sobriety Details */}
       <View style={styles.sobrietyContainer}>
-        <Text style={styles.sobrietyText}>I’ve been sober for:</Text>
+        <Text style={styles.sobrietyText}>I've been sober for:</Text>
         <Text style={styles.sobrietyDetails}>
           Months: 1 {'\n'}
           Weeks: 2 {'\n'}
@@ -40,15 +48,14 @@ export default function RecoveryTrackerScreen() {
         </Text>
       </View>
 
-      {/* Mood Tracking Section */}
       <Text style={styles.moodText}>How are you feeling today?</Text>
       <View style={styles.moodButtonsContainer}>
-        <TouchableOpacity style={styles.moodButton} onPress={() => handleMoodLog('happy')}>
+        <TouchableOpacity style={styles.moodButton} onPress={() => navigation.navigate('DailyLog', { mood: 'happy' })}>
           <Text style={styles.moodEmoji}>😊</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.moodButton} onPress={() => handleMoodLog('sad')}>
-          <Text style={styles.moodEmoji}>😞</Text>
-        </TouchableOpacity>
+        <TouchableOpacity style={styles.moodButton} onPress={() => navigation.navigate('DailyLog', { mood: 'sad' })}>
+      <Text style={styles.moodEmoji}>😞</Text>
+</TouchableOpacity>
       </View>
     </View>
   );
@@ -65,34 +72,35 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   progressText: {
+    fontFamily: 'Khand-Bold',
     fontSize: 24,
-    fontWeight: 'bold',
     color: '#7AA5AA',
   },
   milestoneText: {
+    fontFamily: 'Khand-Medium',
     fontSize: 18,
     marginTop: 20,
     color: '#7AA5AA',
-    fontWeight: '600',
   },
   sobrietyContainer: {
     marginTop: 20,
     alignItems: 'center',
   },
   sobrietyText: {
+    fontFamily: 'Khand-Medium',
     fontSize: 16,
-    fontWeight: '600',
   },
   sobrietyDetails: {
+    fontFamily: 'Khand',
     fontSize: 14,
     marginTop: 10,
     color: '#555',
     textAlign: 'center',
   },
   moodText: {
+    fontFamily: 'Khand-Medium',
     fontSize: 18,
     marginTop: 30,
-    fontWeight: '600',
   },
   moodButtonsContainer: {
     flexDirection: 'row',
