@@ -1,22 +1,21 @@
 import React from 'react';
 import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useFonts } from 'expo-font';
 
-// Define the type for the navigation prop
-type RootStackParamList = {
-  Login: undefined;
-  SignUp: undefined;
-  ForgetPassword: undefined;
-  RecoveryTracker: undefined;
-};
-
-type forgetPasswordScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ForgetPassword'>;
-
-type props = {
-  navigation: forgetPasswordScreenNavigationProp;
-};
+// ... (types remain the same)
 
 export default function ForgetPasswordScreen({ navigation }: props) {
+  const [fontsLoaded] = useFonts({
+    'Khand': require('../../assets/fonts/Khand-Regular.ttf'),
+    'Khand-Medium': require('../../assets/fonts/Khand-Medium.ttf'),
+    'Khand-Bold': require('../../assets/fonts/Khand-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -25,7 +24,7 @@ export default function ForgetPasswordScreen({ navigation }: props) {
         <TextInput 
           style={styles.input} 
           placeholder="Enter your email" 
-          placeholderTextColor="#888" // Set placeholder text color
+          placeholderTextColor="#888"
           keyboardType="email-address"
         />
         <TouchableOpacity style={styles.submitButton} onPress={() => {}}>
@@ -45,38 +44,43 @@ export default function ForgetPasswordScreen({ navigation }: props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF9F1', // Same background color as the LoginScreen
+    backgroundColor: '#FFF9F1',
     padding: 16,
   },
   content: {
-    marginTop: 150, // Shift everything down
+    marginTop: 150,
+    paddingHorizontal: 20,
   },
   heading: {
+    fontFamily: 'Khand-Bold',
     fontSize: 24,
-    fontWeight: 'bold',
     marginBottom: 24,
     textAlign: 'center',
   },
   label: {
+    fontFamily: 'Khand-Medium',
     fontSize: 16,
     marginBottom: 8,
   },
   input: {
-    height: 50, // Increased height for the text input
+    height: 50,
     borderColor: '#ccc',
     borderWidth: 1,
     marginBottom: 16,
-    paddingHorizontal: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    fontFamily: 'Khand',
   },
   submitButton: {
-    backgroundColor: '#7AA5AA', // Color for the Change Password button
-    padding: 10,
+    backgroundColor: '#7AA5AA',
+    padding: 12,
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius: 8,
   },
   submitButtonText: {
     color: '#fff',
     fontSize: 16,
+    fontFamily: 'Khand-Medium',
   },
   loginContainer: {
     flexDirection: 'row',
@@ -85,9 +89,11 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontSize: 16,
+    fontFamily: 'Khand',
   },
   loginLink: {
     fontSize: 16,
     color: '#007BFF',
+    fontFamily: 'Khand-Medium',
   },
 });
