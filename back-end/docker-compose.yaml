@@ -1,0 +1,43 @@
+services:
+  node:
+    # Makes docker build from a custom image based on the Dockerfile
+    build: 
+      dockerfile: ./Dockerfile
+      context: .
+    # Container name to facilitate running
+    container_name: shifa-app-back-end
+    # Restart the image if something causes it to stop
+    restart: always
+    # Default run directory
+    working_dir: /app
+    # List of volumes (directories) mapped from outside to inside the container
+    volumes:
+      # Mount the current directory, with all application data, within the /app directory
+      - ./:/app
+    ports:
+      # Exposes the application's default port
+      - 3001:3001
+    environment:
+      # Here we set our environment variables
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      POSTGRES_HOST: database
+      POSTGRES_DATABASE: shifa-app
+      POSTGRES_PORT: 5432
+    # Notify Docker to ensure that the node container starts after the database container.
+    depends_on:
+      database:
+        condition: service_healthy
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: shifa-app
+    healthcheck:
+    # Must wait for the database to become operational
+      test: ["CMD", "pg_isready"]
+      timeout: 10s
+      retries: 5
+    ports:
+      - "54320:5432"
