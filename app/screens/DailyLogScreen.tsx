@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
+import BottomNavBar from '../components/BottomNavBar';
 
 type RootStackParamList = {
     RecoveryTracker: undefined;
@@ -68,6 +69,8 @@ export default function DailyLogScreen({ navigation, route }: Props) {
                 ) : (
                     <Text style={styles.noLogsText}>No past logs available yet.</Text>
                 )}
+                {/*Navbar section*/}
+                <BottomNavBar navigation={navigation} />
             </ScrollView>
         </SafeAreaView>
     );
@@ -88,6 +91,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         marginBottom: 24,
         textAlign: 'center',
+        padding: 20,
     },
     moodText: {
         fontFamily: 'Khand-Medium',
