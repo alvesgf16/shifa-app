@@ -45,6 +45,11 @@ export default function CreatePasswordScreen({ navigation }: Props) {
   };
 
   const handleCreatePassword = () => {
+    if (!password || !confirmPassword) {
+      Alert.alert('Error', 'Please enter both password fields');
+      return;
+    }
+
     if (password !== confirmPassword) {
       Alert.alert('Error', 'Passwords do not match');
       return;
