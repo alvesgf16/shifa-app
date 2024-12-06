@@ -3,7 +3,9 @@ import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, StyleSheet, Pla
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 
-export default function HomeScreen({ navigation }) {
+import { NavigationProp } from '@react-navigation/native';
+
+export default function HomeScreen({ navigation }: { navigation: NavigationProp<any> }) {
   const [fontsLoaded] = useFonts({
     'Khand': require('../assets/fonts/Khand-Regular.ttf'),
     'Khand-Medium': require('../assets/fonts/Khand-Medium.ttf'),
