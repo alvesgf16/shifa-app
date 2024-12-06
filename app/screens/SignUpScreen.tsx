@@ -36,9 +36,10 @@ export default function SignUpScreen({ navigation }: Props) {
           placeholderTextColor="#888"
           secureTextEntry
         />
-        <TouchableOpacity style={styles.createAccountButton} onPress={() => {}}>
-          <Text style={styles.createAccountButtonText}>Create Account</Text>
-        </TouchableOpacity>
+        <View style={styles.createAccountButton}>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <Text style={styles.createAccountButtonText}>Create Account</Text>
+        </TouchableOpacity></View>
         <TouchableOpacity style={styles.googleButton} onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}>
           <Image source={require('../../assets/images/Google.png')} style={styles.googleIcon} />
           <Text style={styles.googleButtonText}>Continue with Google</Text>

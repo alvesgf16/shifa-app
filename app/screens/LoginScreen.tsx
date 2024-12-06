@@ -3,9 +3,10 @@ import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Imag
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
+  RegisterScreen: undefined;
   ForgetPassword: undefined;
   Home: undefined;
 };
