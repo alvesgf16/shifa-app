@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "904597030657",
+    "project_id": "shifa-app-ea321",
+    "storage_bucket": "shifa-app-ea321.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904597030657:android:3b9aaff7f97f16784d7d00",
+        "android_client_info": {
+          "package_name": "com.k3ng.shifaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "904597030657-hgrv7o9ne7cn4d9fejus4geu14oafho9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.k3ng.shifaapp",
+            "certificate_hash": "b0ebdaedfa2f17027f18b939eee0caeabf33797f"
+          }
+        },
+        {
+          "client_id": "904597030657-bm58mc1juf15jllgot6a99gtrcsj19q9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv7c8CWoD7XBrds7DeEx5U7pO-MtzFOmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "904597030657-bm58mc1juf15jllgot6a99gtrcsj19q9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

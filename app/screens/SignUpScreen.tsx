@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Image, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useUserAuth } from '../contexts/AuthContext';
+import { useFonts } from 'expo-font';
 
-// Define the type for the navigation prop
-type RootStackParamList = {
-  Login: undefined;
-  SignUp: undefined;
-};
-
-type SignUpScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SignUp'>;
-
-type Props = {
-  navigation: SignUpScreenNavigationProp;
-};
+// ... (types remain the same)
 
 export default function SignUpScreen({ navigation }: Props) {
+  const { onGoogleButtonPress } = useUserAuth();
+  const [fontsLoaded] = useFonts({
+    'Khand': require('../../assets/fonts/Khand-Regular.ttf'),
+    'Khand-Medium': require('../../assets/fonts/Khand-Medium.ttf'),
+    'Khand-Bold': require('../../assets/fonts/Khand-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentContainer}>
@@ -23,20 +26,21 @@ export default function SignUpScreen({ navigation }: Props) {
         <TextInput
           style={styles.input}
           placeholder="Email"
-          placeholderTextColor="#888" // Set placeholder text color
+          placeholderTextColor="#888"
           keyboardType="email-address"
         />
         <Text style={styles.label}>Password</Text>
         <TextInput
           style={styles.input}
           placeholder="Password"
-          placeholderTextColor="#888" // Set placeholder text color
+          placeholderTextColor="#888"
           secureTextEntry
         />
-        <TouchableOpacity style={styles.createAccountButton} onPress={() => {}}>
-          <Text style={styles.createAccountButtonText}>Create Account</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.googleButton} onPress={() => {}}>
+        <View style={styles.createAccountButton}>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <Text style={styles.createAccountButtonText}>Create Account</Text>
+        </TouchableOpacity></View>
+        <TouchableOpacity style={styles.googleButton} onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}>
           <Image source={require('../../assets/images/Google.png')} style={styles.googleIcon} />
           <Text style={styles.googleButtonText}>Continue with Google</Text>
         </TouchableOpacity>
@@ -44,8 +48,7 @@ export default function SignUpScreen({ navigation }: Props) {
           <Text style={styles.signupText}>Already have an account? </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Login')}>
             <Text style={styles.signupLink}>Login</Text>
-          </TouchableOpacity>
-        </View>
+          </TouchableOpacity></View>
       </View>
     </SafeAreaView>
   );
@@ -54,43 +57,44 @@ export default function SignUpScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start', // Align content to the top
+    justifyContent: 'flex-start',
     padding: 16,
-    backgroundColor: '#FFF9F1', // Set the background color to #FFF9F1
+    backgroundColor: '#FFF9F1',
   },
   contentContainer: {
-    marginTop: Platform.OS === 'android' ? 60 : 80, // Add top margin to shift content down
+    marginTop: Platform.OS === 'android' ? 60 : 80,
+    paddingHorizontal: 20,
   },
   heading: {
+    fontFamily: 'Khand-Bold',
     fontSize: 24,
-    fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 32,
   },
   googleButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center', // Center the text
-    backgroundColor: '#D1E9FF', // Set the background color to #D1E9FF
-    paddingVertical: 10,
+    justifyContent: 'center',
+    backgroundColor: '#D1E9FF',
+    paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 5,
+    borderRadius: 8,
     marginBottom: 16,
   },
   googleIcon: {
     width: 20,
     height: 20,
     marginRight: 10,
-    resizeMode: 'contain', // Ensure the image scales correctly
+    resizeMode: 'contain',
   },
   googleButtonText: {
-    color: 'black', // Set the text color to black for better contrast
+    fontFamily: 'Khand-Medium',
+    color: 'black',
     fontSize: 16,
-    fontWeight: 'bold',
   },
   label: {
+    fontFamily: 'Khand-Medium',
     fontSize: 16,
-    fontWeight: 'bold',
     marginBottom: 8,
   },
   input: {
@@ -98,19 +102,20 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 12,
-    paddingHorizontal: 8,
-    borderRadius: 5, // Add border radius for better appearance on iOS
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    fontFamily: 'Khand',
   },
   createAccountButton: {
-    backgroundColor: '#F0CF7C', // Set the background color to #F0CF7C
-    paddingVertical: 10,
+    backgroundColor: '#F0CF7C',
+    paddingVertical: 12,
     alignItems: 'center',
     marginBottom: 16,
-    borderRadius: 5, // Add border radius for better appearance on iOS
+    borderRadius: 8,
   },
   createAccountButtonText: {
+    fontFamily: 'Khand-Bold',
     fontSize: 18,
-    fontWeight: 'bold',
   },
   signupContainer: {
     flexDirection: 'row',
@@ -119,9 +124,11 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   signupText: {
+    fontFamily: 'Khand',
     textAlign: 'center',
   },
   signupLink: {
+    fontFamily: 'Khand-Medium',
     color: 'blue',
   },
 });

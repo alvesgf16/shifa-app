@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Image, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useFonts } from 'expo-font';
 
-// Define the type for the navigation prop
-type RootStackParamList = {
+export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
+  RegisterScreen: undefined;
   ForgetPassword: undefined;
-  RecoveryTracker: undefined; // Add the RecoveryTracker screen type
+  Home: undefined;
 };
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
@@ -17,46 +18,64 @@ type Props = {
 };
 
 export default function LoginScreen({ navigation }: Props) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [fontsLoaded] = useFonts({
+    'Khand': require('../../assets/fonts/Khand-Regular.ttf'),
+    'Khand-Medium': require('../../assets/fonts/Khand-Medium.ttf'),
+    'Khand-Bold': require('../../assets/fonts/Khand-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   const handleLogin = () => {
-    // Simulate successful login
-    console.log('Login successful, navigating to RecoveryTracker');
-    navigation.navigate('RecoveryTracker');
+    console.log('Login attempted with:', email, password);
+    navigation.navigate('Home');
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image source={require('../../assets/images/Logo.png')} style={styles.logo} />
-        <Text style={styles.logoText}>Shifa</Text>
-      </View>
-      <Text style={styles.heading}>Login to your account</Text>
-      <Text style={styles.label}>Email</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor="#888" // Set placeholder text color
-        keyboardType="email-address"
-      />
-      <View style={styles.passwordContainer}>
-        <Text style={styles.label}>Password</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
-          <Text style={styles.forgotText}>Forgot?</Text>
+      <View style={styles.content}>
+        <View style={styles.logoContainer}>
+          <Image source={require('../../assets/images/Logo.png')} style={styles.logo} />
+          <Text style={styles.logoText}>Shifa</Text>
+        </View>
+        <Text style={styles.heading}>Login to your account</Text>
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor="#888"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <View style={styles.passwordContainer}>
+          <Text style={styles.label}>Password</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
+            <Text style={styles.forgotText}>Forgot?</Text>
+          </TouchableOpacity>
+        </View>
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor="#888"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+          <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
-      </View>
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        placeholderTextColor="#888" // Set placeholder text color
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginButtonText}>Login</Text>
-      </TouchableOpacity>
-      <View style={styles.signupContainer}>
-        <Text style={styles.signupText}>Don't have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text style={styles.signupLink}>Sign up</Text>
-        </TouchableOpacity>
+        <View style={styles.signupContainer}>
+          <Text style={styles.signupText}>Don't have an account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+            <Text style={styles.signupLink}>Sign up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -65,35 +84,37 @@ export default function LoginScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start', // Align content to the top
+    backgroundColor: '#FFF9F1',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
     padding: 16,
-    paddingTop: Platform.OS === 'android' ? 40 : 60, // Adjust padding for Android and iOS
-    backgroundColor: '#FFF9F1', // Set the background color to #FFF9F1
+    paddingTop: Platform.OS === 'android' ? 40 : 0,
   },
   logoContainer: {
     alignItems: 'center',
     marginBottom: 32,
-    marginTop: 32, // Add margin to the top to create space
   },
   logo: {
     width: 100,
     height: 100,
-    resizeMode: 'contain', // Ensure the image scales correctly
+    resizeMode: 'contain',
   },
   logoText: {
+    fontFamily: 'Khand-Bold',
     fontSize: 24,
-    fontWeight: 'bold',
     marginTop: 8,
   },
   heading: {
+    fontFamily: 'Khand-Bold',
     fontSize: 24,
-    fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 32,
   },
   label: {
+    fontFamily: 'Khand-Medium',
     fontSize: 16,
-    fontWeight: 'bold',
     marginBottom: 8,
   },
   passwordContainer: {
@@ -103,38 +124,44 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   forgotText: {
+    fontFamily: 'Khand',
     fontSize: 14,
     color: 'blue',
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
+    height: 50,
+    borderColor: '#ccc',
     borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 8,
-    borderRadius: 5, // Add border radius for better appearance on iOS
+    marginBottom: 16,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    fontFamily: 'Khand',
   },
   loginButton: {
-    backgroundColor: '#F0CF7C', // Set the background color to #F0CF7C
-    paddingVertical: 10,
+    backgroundColor: '#F0CF7C',
+    paddingVertical: 12,
     alignItems: 'center',
     marginBottom: 16,
-    borderRadius: 5, // Add border radius for better appearance on iOS
+    borderRadius: 8,
   },
   loginButtonText: {
+    fontFamily: 'Khand-Bold',
     fontSize: 18,
-    fontWeight: 'bold',
+    color: '#303C50',
   },
   signupContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 16,
   },
   signupText: {
-    textAlign: 'center',
+    fontFamily: 'Khand',
+    fontSize: 16,
   },
   signupLink: {
+    fontFamily: 'Khand-Medium',
+    fontSize: 16,
     color: 'blue',
+
   },
 });
