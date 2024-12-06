@@ -44,12 +44,12 @@ export default function LoginScreen({ navigation }: Props) {
           <Text style={styles.logoText}>Shifa</Text>
         </View>
         <Text style={styles.heading}>Login to your account</Text>
-        <Text style={styles.label}>Email</Text>
+        <Text style={styles.label}>Email or Username</Text>
         <TextInput
           style={styles.input}
-          placeholder="Email"
+          placeholder="Email or Username"
           placeholderTextColor="#888"
-          keyboardType="email-address"
+          keyboardType="default"
           value={email}
           onChangeText={setEmail}
         />
