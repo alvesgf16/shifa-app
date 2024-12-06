@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Image, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
+import { useUserAuth } from '../contexts/AuthContext';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -18,6 +19,8 @@ type Props = {
 };
 
 export default function LoginScreen({ navigation }: Props) {
+  const { onGoogleButtonPress, user } = useUserAuth();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -37,6 +40,7 @@ export default function LoginScreen({ navigation }: Props) {
   };
 
   return (
+    user ? (navigation.navigate('Home')) : (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.logoContainer}>
@@ -70,6 +74,13 @@ export default function LoginScreen({ navigation }: Props) {
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+              style={styles.googleButton}
+              onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}
+            >
+              <Image source={require('../../assets/images/Google.png')} style={styles.googleIcon} />
+              <Text style={styles.googleButtonText}>Continue with Google</Text>
+            </TouchableOpacity>
         <View style={styles.signupContainer}>
           <Text style={styles.signupText}>Don't have an account? </Text>
           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
@@ -78,7 +89,7 @@ export default function LoginScreen({ navigation }: Props) {
         </View>
       </View>
     </SafeAreaView>
-  );
+  ));
 }
 
 const styles = StyleSheet.create({
@@ -148,6 +159,27 @@ const styles = StyleSheet.create({
     fontFamily: 'Khand-Bold',
     fontSize: 18,
     color: '#303C50',
+  },
+  googleButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#D1E9FF',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  googleIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+    resizeMode: 'contain',
+  },
+  googleButtonText: {
+    fontFamily: 'Khand-Medium',
+    color: 'black',
+    fontSize: 16,
   },
   signupContainer: {
     flexDirection: 'row',

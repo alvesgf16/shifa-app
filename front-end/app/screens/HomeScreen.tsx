@@ -2,8 +2,25 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, StyleSheet, Platform, Modal, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useUserAuth } from '../contexts/AuthContext';
 
-export default function HomeScreen({ navigation }) {
+export type RootStackParamList = {
+  Home: undefined,
+  Login: undefined,
+  Profile: undefined,
+  RecoveryTracker: undefined,
+};
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+
+type Props = {
+  navigation: HomeScreenNavigationProp;
+};
+
+export default function HomeScreen({ navigation }: Props) {
+  const { signOut } = useUserAuth();
+
   const [fontsLoaded] = useFonts({
     'Khand': require('../assets/fonts/Khand-Regular.ttf'),
     'Khand-Medium': require('../assets/fonts/Khand-Medium.ttf'),
@@ -54,9 +71,9 @@ export default function HomeScreen({ navigation }) {
     }).start(() => setShowMenu(false));
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     hideMenuAnimation();
-    // Add your logout logic here
+    await signOut();
     navigation.navigate('Login');
   };
 
@@ -103,17 +120,17 @@ export default function HomeScreen({ navigation }) {
         {/* Navigation Grid */}
         <View style={styles.grid}>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.gridButton} onPress={() => navigation.navigate('FindHelp')}>
+            <TouchableOpacity style={styles.gridButton} onPress={() => {}}>
               <Ionicons name="location-outline" size={24} color="#FFFFFF" />
               <Text style={styles.buttonText}>Find Help</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.gridButton} onPress={() => navigation.navigate('Resources')}>
+            <TouchableOpacity style={styles.gridButton} onPress={() => {}}>
               <Ionicons name="desktop-outline" size={24} color="#FFFFFF" />
               <Text style={styles.buttonText}>Resources</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.row}>
-            <TouchableOpacity style={styles.gridButton} onPress={() => navigation.navigate('Community')}>
+            <TouchableOpacity style={styles.gridButton} onPress={() => {}}>
               <Ionicons name="people-outline" size={24} color="#FFFFFF" />
               <Text style={styles.buttonText}>Community</Text>
             </TouchableOpacity>
@@ -122,7 +139,7 @@ export default function HomeScreen({ navigation }) {
               <Text style={styles.buttonText}>My Progress</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.eventsButton} onPress={() => navigation.navigate('Events')}>
+          <TouchableOpacity style={styles.eventsButton} onPress={() => {}}>
             <Ionicons name="calendar-outline" size={24} color="#FFFFFF" />
             <Text style={styles.buttonText}>Events</Text>
           </TouchableOpacity>
@@ -207,7 +224,6 @@ export default function HomeScreen({ navigation }) {
               style={styles.menuItem}
               onPress={() => {
                 hideMenuAnimation();
-                navigation.navigate('Support');
               }}
             >
               <Ionicons name="help-circle-outline" size={24} color="#FFF9F1" />
@@ -218,7 +234,6 @@ export default function HomeScreen({ navigation }) {
               style={styles.menuItem}
               onPress={() => {
                 hideMenuAnimation();
-                navigation.navigate('PrivacyPolicy');
               }}
             >
               <Text style={styles.menuLinkText}>Privacy Policy</Text>
@@ -228,7 +243,6 @@ export default function HomeScreen({ navigation }) {
               style={styles.menuItem}
               onPress={() => {
                 hideMenuAnimation();
-                navigation.navigate('Terms');
               }}
             >
               <Text style={styles.menuLinkText}>Terms of Service</Text>
@@ -236,7 +250,7 @@ export default function HomeScreen({ navigation }) {
 
             <TouchableOpacity 
               style={styles.logoutButton}
-              onPress={handleLogout}
+              onPress={() => handleLogout().then(() => console.log('User signed out!'))}
             >
               <Text style={styles.logoutText}>→ Logout</Text>
             </TouchableOpacity>
