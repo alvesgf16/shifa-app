@@ -1,68 +1,75 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { useFonts } from 'expo-font';
 
-// Define the navigation types
 type RootStackParamList = {
     RecoveryTracker: undefined;
-    DailyLog: { mood: string }; // Pass `mood` as a parameter
+    DailyLog: { mood: string };
 };
 
-type DailyLogScreenNavigationProp = StackNavigationProp<RootStackParamList, 'DailyLog'>;
-type DailyLogScreenRouteProp = RouteProp<RootStackParamList, 'DailyLog'>;
-
-type Props = {
-    navigation: DailyLogScreenNavigationProp;
-    route: DailyLogScreenRouteProp;
-};
+type Props = StackScreenProps<RootStackParamList, 'DailyLog'>;
 
 export default function DailyLogScreen({ navigation, route }: Props) {
-    const { mood } = route.params; // Retrieve the mood passed from the RecoveryTrackerScreen
-    const [log, setLog] = useState(''); // State for the log input
+    const { mood } = route.params;
+    const [log, setLog] = useState('');
 
-  // Placeholder function to handle saving the log
+    const [fontsLoaded] = useFonts({
+        'Khand': require('../../assets/fonts/Khand-Regular.ttf'),
+        'Khand-Medium': require('../../assets/fonts/Khand-Medium.ttf'),
+        'Khand-Bold': require('../../assets/fonts/Khand-Bold.ttf'),
+    });
+
+    if (!fontsLoaded) {
+        return null;
+    }
+
     const handleSaveLog = () => {
         console.log(`Mood: ${mood}, Log: ${log}`);
-        navigation.goBack(); // Navigate back to RecoveryTrackerScreen
+        navigation.goBack();
     };
 
     return (
-        <View style={styles.container}>
-        <Text style={styles.heading}>Daily Reflection</Text>
-        <Text style={styles.moodText}>Your mood: {mood === 'happy' ? '😊' : '😞'}</Text>
+        <SafeAreaView style={styles.container}>
+            <View style={styles.content}>
+                <Text style={styles.heading}>Daily Reflection</Text>
+                <Text style={styles.moodText}>Your mood: {mood === 'happy' ? '😊' : '😞'}</Text>
 
-      {/* Text Input for the log */}
-        <TextInput
-            style={styles.textInput}
-            placeholder="Write your reflection here..."
-            placeholderTextColor="#888"
-            multiline
-            value={log}
-            onChangeText={setLog}
-        />
+                <TextInput
+                    style={styles.textInput}
+                    placeholder="Write your reflection here..."
+                    placeholderTextColor="#888"
+                    multiline
+                    value={log}
+                    onChangeText={setLog}
+                />
 
-      {/* Save Button */}
-        <TouchableOpacity style={styles.saveButton} onPress={handleSaveLog}>
-            <Text style={styles.saveButtonText}>Save Reflection</Text>
-        </TouchableOpacity>
-        </View>
+                <TouchableOpacity style={styles.saveButton} onPress={handleSaveLog}>
+                    <Text style={styles.saveButtonText}>Save Reflection</Text>
+                </TouchableOpacity>
+            </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
         backgroundColor: '#FFF9F1',
+        padding: 16,
+    },
+    content: {
+        marginTop: 150,
+        paddingHorizontal: 20,
     },
     heading: {
+        fontFamily: 'Khand-Bold',
         fontSize: 24,
-        fontWeight: 'bold',
+        marginBottom: 24,
         textAlign: 'center',
-        marginBottom: 16,
     },
     moodText: {
+        fontFamily: 'Khand-Medium',
         fontSize: 18,
         textAlign: 'center',
         marginBottom: 16,
@@ -76,6 +83,7 @@ const styles = StyleSheet.create({
         textAlignVertical: 'top',
         marginBottom: 20,
         backgroundColor: '#fff',
+        fontFamily: 'Khand',
     },
     saveButton: {
         backgroundColor: '#7AA5AA',
@@ -87,5 +95,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 16,
+        fontFamily: 'Khand-Medium',
     },
 });
