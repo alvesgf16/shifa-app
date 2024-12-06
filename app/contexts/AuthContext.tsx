@@ -81,3 +81,5 @@ export const useUserAuth = () => {
 
   return context;
 };
+
+export default AuthContextProvider;
