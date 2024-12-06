@@ -7,21 +7,28 @@ import RecoveryTrackerScreen from './screens/RecoveryTrackerScreen';
 import DailyLogScreen from './screens/DailyLogScreen';
 import VerifyPasswordScreen from './screens/VerifyPasswordScreen';
 import CreatePasswordScreen from './screens/CreatePasswordScreen';
+import HomeScreen from './screens/HomeScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import { AuthContextProvider } from './contexts/AuthContext';
 
 
 const Stack = createStackNavigator();
 
 export default function RootLayout() {
   return (
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} />
-        <Stack.Screen name="RecoveryTracker" component={RecoveryTrackerScreen} />
-        <Stack.Screen name="DailyLog" component={DailyLogScreen} />
-        <Stack.Screen name="VerifyPasswordScreen" component={VerifyPasswordScreen} />
-        <Stack.Screen name="CreatePasswordScreen" component={CreatePasswordScreen} />
+    <AuthContextProvider>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
+      <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} />
+      <Stack.Screen name="RecoveryTracker" component={RecoveryTrackerScreen} />
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="DailyLog" component={DailyLogScreen} />
+      <Stack.Screen name="VerifyPasswordScreen" component={VerifyPasswordScreen} />
+      <Stack.Screen name="CreatePasswordScreen" component={CreatePasswordScreen} />
 
-      </Stack.Navigator>
+    </Stack.Navigator>
+  </AuthContextProvider>
   );
 }
