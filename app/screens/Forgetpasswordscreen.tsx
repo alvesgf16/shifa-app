@@ -3,9 +3,11 @@ import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity } fro
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
 
-// ... (types remain the same)
+type Props = {
+  navigation: StackNavigationProp<any, any>;
+};
 
-export default function ForgetPasswordScreen({ navigation }: props) {
+export default function ForgetPasswordScreen({ navigation }: Props) {
   const [fontsLoaded] = useFonts({
     'Khand': require('../../assets/fonts/Khand-Regular.ttf'),
     'Khand-Medium': require('../../assets/fonts/Khand-Medium.ttf'),
@@ -27,7 +29,7 @@ export default function ForgetPasswordScreen({ navigation }: props) {
           placeholderTextColor="#888"
           keyboardType="email-address"
         />
-        <TouchableOpacity style={styles.submitButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.submitButton} onPress={() => navigation.navigate('VerifyPasswordScreen')}>
           <Text style={styles.submitButtonText}>Change Password</Text>
         </TouchableOpacity>
         <View style={styles.loginContainer}>
