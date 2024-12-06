@@ -595,7 +595,9 @@ export default function HomeScreen({ navigation }) {
               }}
             >
               <Ionicons name="person-outline" size={24} color="#FFF9F1" />
+              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
               <Text style={styles.menuItemText}>Profile</Text>
+              </TouchableOpacity>
             </TouchableOpacity>
 
             <TouchableOpacity 

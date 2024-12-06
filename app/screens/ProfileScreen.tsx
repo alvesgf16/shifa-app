@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../screens/LoginScreen'; 
-import { useFonts } from 'expo-font';
+import { RootStackParamList } from './LoginScreen'; 
+import BottomNavBar from '../components/BottomNavBar';
 
-type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'RegisterScreen'>;
+type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ProfileScreen'>;
 
 type Props = {
-  navigation: RegisterScreenNavigationProp;
+  navigation: ProfileScreenNavigationProp;
 };
 
 export default function RegisterScreen({ navigation }: Props) {
   const [form, setForm] = useState({
-    username: '',
     firstName: '',
     middleName: '',
     lastName: '',
@@ -39,9 +38,8 @@ export default function RegisterScreen({ navigation }: Props) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.heading}>Create Account</Text>
+        <Text style={styles.heading}>Update Account Information</Text>
         {[
-          { label: 'Username', field: 'username' },
           { label: 'First Name', field: 'firstName' },
           { label: 'Middle Name', field: 'middleName' },
           { label: 'Last Name', field: 'lastName' },
@@ -72,6 +70,7 @@ export default function RegisterScreen({ navigation }: Props) {
         <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <Text style={styles.submitButtonText}>Submit</Text>
         </TouchableOpacity>
+        <BottomNavBar navigation={navigation} />
       </ScrollView>
     </SafeAreaView>
   );

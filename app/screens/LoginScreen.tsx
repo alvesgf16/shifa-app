@@ -6,7 +6,7 @@ import { useFonts } from 'expo-font';
 export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
-  RegisterScreen: undefined;
+  ProfileScreen: undefined;
   ForgetPassword: undefined;
   Home: undefined;
 };
