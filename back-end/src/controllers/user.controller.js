@@ -36,68 +36,68 @@ const getById = async (req, res) => {
 const create = async (req, res) => {
   try {
     const {
-      role,
+      // role,
       username,
-      password,
+      // password,
       firstName,
-      middleName,
+      // middleName,
       lastName,
-      address,
+      // address,
       email,
-      phoneNumber,
-      dateOfBirth,
-      daysSober,
+      // phoneNumber,
+      // dateOfBirth,
+      // daysSober,
     } = req.body;
     const newUser = await UserService.create(
-      role,
+      // role,
       username,
-      password,
+      // password,
       firstName,
-      middleName,
+      // middleName,
       lastName,
-      address,
+      // address,
       email,
-      phoneNumber,
-      dateOfBirth,
-      daysSober,
+      // phoneNumber,
+      // dateOfBirth,
+      // daysSober,
     );
 
     return res.status(201).json(newUser);
   } catch (e) {
     console.log(e.message);
-    return res.status(500).json({ message: 'An error occurred' });
+    return res.status(500).json({ message: e.message });
   }
 };
 
 const update = async (req, res) => {
   try {
     const {
-      role,
+      // role,
       username,
-      password,
+      // password,
       firstName,
-      middleName,
+      // middleName,
       lastName,
-      address,
+      // address,
       email,
-      phoneNumber,
-      dateOfBirth,
-      daysSober,
+      // phoneNumber,
+      // dateOfBirth,
+      // daysSober,
     } = req.body;
     const { id } = req.params;
     const updatedUser = await UserService.update(
       id,
-      role,
+      // role,
       username,
-      password,
+      // password,
       firstName,
-      middleName,
+      // middleName,
       lastName,
-      address,
+      // address,
       email,
-      phoneNumber,
-      dateOfBirth,
-      daysSober,
+      // phoneNumber,
+      // dateOfBirth,
+      // daysSober,
     );
 
     if (!updatedUser) {

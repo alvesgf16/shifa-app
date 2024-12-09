@@ -7,18 +7,18 @@ const getAllByAuthorId = async (authorId) => JournalEntry.findAll({
 
 const getById = async (id) => JournalEntry.findOne({ where: { id } });
 
-const create = async (mood, title, authorId, content) => JournalEntry.create({
+const create = async (mood, authorId, content) => JournalEntry.create({
   mood,
-  title,
+  // title,
   authorId,
   content,
 });
 
-const update = async (id, mood, title, authorId, content) => {
+const update = async (id, mood, authorId, content) => {
   const [updatedJournalEntry] = await JournalEntry.update(
     {
       mood,
-      title,
+      // title,
       authorId,
       content,
     },

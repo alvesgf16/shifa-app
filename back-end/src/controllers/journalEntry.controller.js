@@ -16,10 +16,10 @@ const getById = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    const { mood, title, authorId, content } = req.body;
+    const { mood, authorId, content } = req.body;
     const newJournalEntry = await JournalEntryService.create(
       mood,
-      title,
+      // title,
       authorId,
       content,
     );
@@ -33,12 +33,12 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { mood, title, authorId, content } = req.body;
+    const { mood, authorId, content } = req.body;
     const { id } = req.params;
     const updatedJournalEntry = await JournalEntryService.update(
       id,
       mood,
-      title,
+      // title,
       authorId,
       content,
     );

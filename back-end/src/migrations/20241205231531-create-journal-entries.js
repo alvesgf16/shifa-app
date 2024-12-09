@@ -1,7 +1,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.createTable('journalEntries', {
+    return queryInterface.createTable('JournalEntries', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -19,11 +19,10 @@ module.exports = {
       authorId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        field: 'author_id',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
-          model: 'users',
+          model: 'Users',
           key: 'id',
         },
       },
@@ -31,10 +30,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
     });
   },
 
   async down(queryInterface, _Sequelize) {
-    return queryInterface.dropTable('journalEntries');
+    return queryInterface.dropTable('JournalEntries');
   },
 };

@@ -1,67 +1,61 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.createTable('users', {
+    return queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      role: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      username: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
+      // role: {
+      //   allowNull: false,
+      //   type: Sequelize.STRING,
+      // },
+      // username: {
+      //   allowNull: false,
+      //   type: Sequelize.STRING,
+      // },
       password: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING,
       },
       firstName: {
         allowNull: false,
         type: Sequelize.STRING,
-        field: 'first_name',
       },
-      middleName: {
-        allowNull: true,
-        type: Sequelize.STRING,
-        field: 'middle_name',
-      },
+      // middleName: {
+      //   allowNull: true,
+      //   type: Sequelize.STRING,
+      // },
       lastName: {
         allowNull: false,
         type: Sequelize.STRING,
-        field: 'last_name',
       },
-      address: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
+      // address: {
+      //   allowNull: false,
+      //   type: Sequelize.STRING,
+      // },
       email: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      phoneNumber: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        field: 'phone_number',
-      },
-      dateOfBirth: {
-        allowNull: false,
-        type: Sequelize.DATEONLY,
-        field: 'date_of_birth',
-      },
-      daysSober: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        field: 'days_sober',
-      },
+      // phoneNumber: {
+      //   allowNull: false,
+      //   type: Sequelize.STRING,
+      // },
+      // dateOfBirth: {
+      //   allowNull: false,
+      //   type: Sequelize.DATEONLY,
+      // },
+      // daysSober: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER,
+      // },
     });
   },
 
   async down(queryInterface, _Sequelize) {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('Users');
   },
 };
