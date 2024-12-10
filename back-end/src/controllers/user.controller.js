@@ -1,6 +1,23 @@
 const UserService = require('../services/user.service');
 const JournalEntryService = require('../services/journalEntry.service');
 
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    console.log(`Login attempt: ${email}`);
+    const user = await UserService.findByEmailAndPassword(email, password);
+    if (!user) {
+      console.log('Invalid email or password');
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+    console.log('Login successful:', user);
+    return res.status(200).json({ message: 'Login successful', user });
+  } catch (e) {
+    console.log('Error during login:', e.message);
+    return res.status(500).json({ message: 'An error occurred' });
+  }
+};
+
 const getAll = async (_req, res) => {
   try {
     const users = await UserService.getAll();
@@ -37,11 +54,11 @@ const create = async (req, res) => {
   try {
     const {
       // role,
-      username,
-      // password,
-      firstName,
+      // username,
+      password,
+      // firstName,
       // middleName,
-      lastName,
+      // lastName,
       // address,
       email,
       // phoneNumber,
@@ -50,11 +67,11 @@ const create = async (req, res) => {
     } = req.body;
     const newUser = await UserService.create(
       // role,
-      username,
-      // password,
-      firstName,
+      // username,
+      password,
+      // firstName,
       // middleName,
-      lastName,
+      // lastName,
       // address,
       email,
       // phoneNumber,
@@ -73,11 +90,11 @@ const update = async (req, res) => {
   try {
     const {
       // role,
-      username,
-      // password,
-      firstName,
+      // username,
+      password,
+      // firstName,
       // middleName,
-      lastName,
+      // lastName,
       // address,
       email,
       // phoneNumber,
@@ -88,11 +105,11 @@ const update = async (req, res) => {
     const updatedUser = await UserService.update(
       id,
       // role,
-      username,
-      // password,
-      firstName,
+      // username,
+      password,
+      // firstName,
       // middleName,
-      lastName,
+      // lastName,
       // address,
       email,
       // phoneNumber,
@@ -129,4 +146,5 @@ module.exports = {
   create,
   update,
   remove,
+  login,
 };

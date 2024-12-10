@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Image, Platform } from 'react-native';
+import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Image, Platform, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
 import { useUserAuth } from '../contexts/AuthContext';
+import { loginUser } from '../apiService'; // Ensure the correct import path
 
 export type RootStackParamList = {
   Login: undefined;
@@ -34,9 +35,23 @@ export default function LoginScreen({ navigation }: Props) {
     return null;
   }
 
-  const handleLogin = () => {
-    console.log('Login attempted with:', email, password);
-    navigation.navigate('Home');
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Validation Error', 'Please enter both email and password.');
+      return;
+    }
+    try {
+      const response = await loginUser(email, password);
+      if (response) {
+        // Navigate to Home screen on successful login
+        navigation.navigate('Home');
+      } else {
+        Alert.alert('Login failed', 'Invalid email or password');
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+      Alert.alert('Login failed', 'An error occurred. Please try again.');
+    }
   };
 
   return (
@@ -194,6 +209,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Khand-Medium',
     fontSize: 16,
     color: 'blue',
-
   },
 });

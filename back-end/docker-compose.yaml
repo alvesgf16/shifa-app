@@ -7,7 +7,7 @@ services:
     # Container name to facilitate running
     container_name: shifa-app-back-end
     # Restart the image if something causes it to stop
-    restart: always
+    restart: on-failure
     # Default run directory
     working_dir: /app
     # List of volumes (directories) mapped from outside to inside the container
@@ -26,8 +26,8 @@ services:
       POSTGRES_PORT: 5432
     # Notify Docker to ensure that the node container starts after the database container.
     depends_on:
-      database:
-        condition: service_healthy
+      - database
+        # condition: service_healthy
   database:
     image: postgres
     restart: always

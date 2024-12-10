@@ -7,6 +7,7 @@ const app = express();
 
 app.use(express.json());
 
+app.post('/login', user.login);
 app.get('/users', user.getAll);
 app.get('/user/:id', user.getById);
 app.post('/user', user.create);

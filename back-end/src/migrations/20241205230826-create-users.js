@@ -20,18 +20,18 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING,
       },
-      firstName: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
+      // firstName: {
+      //   allowNull: false,
+      //   type: Sequelize.STRING,
+      // },
       // middleName: {
       //   allowNull: true,
       //   type: Sequelize.STRING,
       // },
-      lastName: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
+      // lastName: {
+      //   allowNull: false,
+      //   type: Sequelize.STRING,
+      // },
       // address: {
       //   allowNull: false,
       //   type: Sequelize.STRING,

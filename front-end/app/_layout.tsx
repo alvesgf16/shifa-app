@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
 
-import ForgetPasswordScreen from './screens/ForgetPasswordScreen';
+import ForgetPasswordScreen from './screens/Forgetpasswordscreen';
 import RecoveryTrackerScreen from './screens/RecoveryTrackerScreen';
 import DailyLogScreen from './screens/DailyLogScreen';
 import VerifyPasswordScreen from './screens/VerifyPasswordScreen';
