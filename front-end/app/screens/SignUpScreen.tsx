@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Image, Platform } from 'react-native';
+import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Image, Platform, Alert } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
+import { registerUser } from '../apiService'; // Ensure the correct import path
 
 type Props = {
   navigation: StackNavigationProp<any, any>;
@@ -14,14 +15,31 @@ export default function SignUpScreen({ navigation }: Props) {
     'Khand-Bold': require('../../assets/fonts/Khand-Bold.ttf'),
   });
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isAccountCreated, setIsAccountCreated] = useState(false);
 
   if (!fontsLoaded) {
     return null;
   }
 
-  const handleCreateAccount = () => {
-    setIsAccountCreated(true);
+  const handleCreateAccount = async () => {
+    if (!email || !password) {
+      Alert.alert('Validation Error', 'Please enter both email and password.');
+      return;
+    }
+
+    try {
+      const response = await registerUser(email, password);
+      if (response) {
+        setIsAccountCreated(true);
+      } else {
+        Alert.alert('Registration failed', 'Please try again.');
+      }
+    } catch (error) {
+      console.error('Error registering user:', error);
+      Alert.alert('Registration failed', 'An error occurred. Please try again.');
+    }
   };
 
   return (
@@ -30,12 +48,14 @@ export default function SignUpScreen({ navigation }: Props) {
         {!isAccountCreated ? (
           <>
             <Text style={styles.heading}>Create your account</Text>
-            <Text style={styles.label}>Email or Username</Text>
+            <Text style={styles.label}>Email</Text>
             <TextInput
               style={styles.input}
-              placeholder="Email or Username"
+              placeholder="Email"
               placeholderTextColor="#888"
-              keyboardType="default"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
             />
             <Text style={styles.label}>Password</Text>
             <TextInput
@@ -43,6 +63,8 @@ export default function SignUpScreen({ navigation }: Props) {
               placeholder="Password"
               placeholderTextColor="#888"
               secureTextEntry
+              value={password}
+              onChangeText={setPassword}
             />
             <View style={styles.createAccountButton}>
               <TouchableOpacity onPress={handleCreateAccount}>
@@ -51,26 +73,26 @@ export default function SignUpScreen({ navigation }: Props) {
             </View>
             <View style={styles.signupContainer}>
               <Text style={styles.signupText}>Already have an account? </Text>
-              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Text style={styles.signupLink}>Login</Text>
               </TouchableOpacity>
             </View>
           </>
-) : (
-  <View style={styles.confirmationContainer}>
-    <Text style={styles.heading}>Account Created Successfully!</Text>
-    <Text style={styles.appMessage}>Thank you for downloading Shifa!</Text>
-    <Text style={styles.confirmationMessage}>
-      Your account has been created. Please log in with your credentials.
-    </Text>
-    <TouchableOpacity
-      style={styles.loginButton}
-      onPress={() => navigation.navigate('Login')}
-    >
-      <Text style={styles.loginButtonText}>Go to Login</Text>
-    </TouchableOpacity>
-  </View>
-)}
+        ) : (
+          <View style={styles.confirmationContainer}>
+            <Text style={styles.heading}>Account Created Successfully!</Text>
+            <Text style={styles.appMessage}>Thank you for downloading Shifa!</Text>
+            <Text style={styles.confirmationMessage}>
+              Your account has been created. Please log in with your credentials.
+            </Text>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => navigation.goBack()}
+            >
+              <Text style={styles.loginButtonText}>Go to Login</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
