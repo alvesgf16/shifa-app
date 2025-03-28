@@ -19,7 +19,6 @@ const create = async (req, res) => {
     const { mood, authorId, content } = req.body;
     const newJournalEntry = await JournalEntryService.create(
       mood,
-      // title,
       authorId,
       content,
     );
@@ -38,7 +37,6 @@ const update = async (req, res) => {
     const updatedJournalEntry = await JournalEntryService.update(
       id,
       mood,
-      // title,
       authorId,
       content,
     );

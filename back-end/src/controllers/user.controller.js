@@ -52,34 +52,19 @@ const getById = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    const {
-      // role,
-      // username,
-      password,
-      // firstName,
-      // middleName,
-      // lastName,
-      // address,
-      email,
-      // phoneNumber,
-      // dateOfBirth,
-      // daysSober,
-    } = req.body;
-    const newUser = await UserService.create(
-      // role,
-      // username,
-      password,
-      // firstName,
-      // middleName,
-      // lastName,
-      // address,
-      email,
-      // phoneNumber,
-      // dateOfBirth,
-      // daysSober,
-    );
+    const { password, email } = req.body;
 
-    return res.status(201).json(newUser);
+    const existingEmail = await UserService.findByEmail(email);
+
+    if (existingEmail !== null) {
+      return res.status(409).json({ message: 'User already exists.' });
+    }
+
+    const newUser = await UserService.create(password, email);
+
+    return res
+      .status(201)
+      .json({ message: 'User created successfully', data: newUser });
   } catch (e) {
     console.log(e.message);
     return res.status(500).json({ message: e.message });
@@ -88,34 +73,9 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const {
-      // role,
-      // username,
-      password,
-      // firstName,
-      // middleName,
-      // lastName,
-      // address,
-      email,
-      // phoneNumber,
-      // dateOfBirth,
-      // daysSober,
-    } = req.body;
+    const { password, email } = req.body;
     const { id } = req.params;
-    const updatedUser = await UserService.update(
-      id,
-      // role,
-      // username,
-      password,
-      // firstName,
-      // middleName,
-      // lastName,
-      // address,
-      email,
-      // phoneNumber,
-      // dateOfBirth,
-      // daysSober,
-    );
+    const updatedUser = await UserService.update(id, password, email);
 
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
@@ -131,7 +91,11 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
   try {
     const { id } = req.params;
-    await UserService.remove(id);
+    const deletedUser = await UserService.remove(id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
     return res.status(200).json({ message: 'User deleted successfully!' });
   } catch (e) {

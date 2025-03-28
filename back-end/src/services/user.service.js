@@ -4,60 +4,29 @@ const getAll = async () => User.findAll();
 
 const getById = async (id) => User.findOne({ where: { id } });
 
-const findByEmailAndPassword = async (email, password) => User.findOne({ where: { email, password } });
+const findByEmailAndPassword = async (email, password) => (
+  User.findOne({ where: { email, password } })
+);
+
+const findByEmail = async (email) => User.findOne({ where: { email } });
+
 const create = async (
-  // role,
-  // username,
   password,
-  // firstName,
-  // middleName,
-  // lastName,
-  // address,
   email,
-  // phoneNumber,
-  // dateOfBirth,
-  // daysSober,
 ) => User.create({
-  // role,
-  // username,
   password,
-  // firstName,
-  // middleName,
-  // lastName,
-  // address,
   email,
-  // phoneNumber,
-  // dateOfBirth,
-  // daysSober,
 });
 
 const update = async (
   id,
-  // role,
-  // username,
   password,
-  // firstName,
-  // middleName,
-  // lastName,
-  // address,
   email,
-  // phoneNumber,
-  // dateOfBirth,
-  // daysSober,
 ) => {
   const [updatedUser] = await User.update(
     {
-      // role,
-      // username,
       password,
-      // firstName,
-      // middleName,
-      // lastName,
-      // address,
       email,
-      // phoneNumber,
-      // dateOfBirth,
-      // daysSober,
     },
     { where: { id } },
   );
@@ -74,4 +43,5 @@ module.exports = {
   update,
   remove,
   findByEmailAndPassword,
+  findByEmail,
 };
